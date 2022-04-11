@@ -21,13 +21,19 @@ jobs:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
 
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 7.0.0-rc.3
+
       - name: ⎔ Setup node
         uses: actions/setup-node@v3
         with:
           node-version: 14
+          cache: 'pnpm'
 
       - name: 📥 Download deps
-        uses: bahmutov/npm-install@v1
+        run: pnpm install
 
       - name: 🔬 Lint
         run: npm run lint
@@ -42,13 +48,19 @@ jobs:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
 
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 7.0.0-rc.3
+
       - name: ⎔ Setup node
         uses: actions/setup-node@v3
         with:
           node-version: 14
+          cache: 'pnpm'
 
       - name: 📥 Download deps
-        uses: bahmutov/npm-install@v1
+        run: pnpm install
 
       - name: 🔎 Type check
         run: npm run typecheck --if-present
@@ -63,13 +75,18 @@ jobs:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
 
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 7.0.0-rc.3
+
       - name: ⎔ Setup node
         uses: actions/setup-node@v3
         with:
           node-version: 14
 
       - name: 📥 Download deps
-        uses: bahmutov/npm-install@v1
+        run: pnpm install
 
       - name: ⚡ Run vitest
         run: npm run test -- --coverage
@@ -87,13 +104,18 @@ jobs:
       - name: 🏄 Copy test env vars
         run: cp .env.example .env
 
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 7.0.0-rc.3
+
       - name: ⎔ Setup node
         uses: actions/setup-node@v3
         with:
           node-version: 14
 
       - name: 📥 Download deps
-        uses: bahmutov/npm-install@v1
+        run: pnpm install
 
       - name: 🏗 Build
         run: npm run build
@@ -101,6 +123,7 @@ jobs:
       - name: 🌳 Cypress run
         uses: cypress-io/github-action@v2
         with:
+          install-command: "pnpm install"
           start: npm run dev
           wait-on: "http://localhost:8811"
         env:
@@ -117,6 +140,11 @@ jobs:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
 
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 7.0.0-rc.3
+
       - name: ⎔ Setup node
         uses: actions/setup-node@v3
         with:
@@ -132,7 +160,7 @@ jobs:
           VER=`npm --version`; echo "npm ver:    $VER"
 
       - name: 📥 Download deps
-        uses: bahmutov/npm-install@v1
+        run: pnpm install
 
       - name: 🏗 Build
         run: npm run build
